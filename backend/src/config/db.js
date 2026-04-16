@@ -1,31 +1,28 @@
-const { Pool } = require('pg');
+const { Pool } = require("pg");
 
-// using connection pool - works well with supabase's postgres
+// Use DATABASE_URL (recommended for production - Supabase + Render)
 const pool = new Pool({
-  host: process.env.DB_HOST,
-  port: parseInt(process.env.DB_PORT) || 5432,
-  database: process.env.DB_NAME || 'postgres',
-  user: process.env.DB_USER || 'postgres',
-  password: process.env.DB_PASSWORD,
+  connectionString: process.env.DATABASE_URL,
   ssl: {
-    rejectUnauthorized: false // required for supabase
+    rejectUnauthorized: false, // required for Supabase
   },
   max: 10,
   idleTimeoutMillis: 30000,
 });
 
-pool.on('error', (err) => {
-  console.error('Unexpected db pool error', err);
+// Handle unexpected errors
+pool.on("error", (err) => {
+  console.error("❌ Unexpected DB pool error:", err);
 });
 
-// quick test to verify connection on startup
+// Test DB connection on server start
 const testConnection = async () => {
   try {
     const client = await pool.connect();
-    console.log('✅ Connected to PostgreSQL (Supabase)');
+    console.log("✅ Connected to PostgreSQL (Supabase)");
     client.release();
   } catch (err) {
-    console.error('❌ DB connection failed:', err.message);
+    console.error("❌ DB connection failed:", err.message);
     process.exit(1);
   }
 };
