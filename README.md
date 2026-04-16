@@ -356,10 +356,3 @@ REACT_APP_API_URL=http://localhost:5000/api
 | **Password**   | `password`              |
 
 ---
-
-## Live Demo
-
-|                 | URL                                 |
-| --------------- | ----------------------------------- |
-| **Frontend**    | _(add Vercel URL after deployment)_ |
-| **Backend API** | _(add Render URL after deployment)_ |
