@@ -11,14 +11,21 @@ import StoreOwnerDashboard from "./pages/StoreOwnerDashboard";
 import Navbar from "./components/Navbar";
 import LoadingSpinner from "./components/LoadingSpinner";
 
+// ─── Initialize theme from localStorage before first render ───────────────────
+// Defaults to dark if no preference is saved
+const savedTheme = localStorage.getItem("theme");
+if (savedTheme === "light") {
+  document.documentElement.classList.remove("dark");
+} else {
+  document.documentElement.classList.add("dark");
+}
+
 const ProtectedRoute = ({ children, allowedRoles }) => {
   const { user, loading } = useAuth();
-
   if (loading) return <LoadingSpinner fullPage />;
   if (!user) return <Navigate to="/login" replace />;
-  if (allowedRoles && !allowedRoles.includes(user.role)) {
+  if (allowedRoles && !allowedRoles.includes(user.role))
     return <Navigate to="/" replace />;
-  }
   return children;
 };
 
@@ -118,7 +125,8 @@ const AppRoutes = () => {
 const App = () => (
   <BrowserRouter>
     <AuthProvider>
-      <div className="min-h-screen bg-slate-50">
+      {/* Root wrapper respects dark mode — bg/text switch with the class on <html> */}
+      <div className="min-h-screen bg-slate-100 dark:bg-[#050505] text-slate-900 dark:text-white transition-colors duration-300">
         <AppRoutes />
       </div>
     </AuthProvider>
