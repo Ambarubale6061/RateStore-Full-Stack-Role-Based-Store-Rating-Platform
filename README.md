@@ -1,41 +1,75 @@
+<div align="center">
+
 # ⭐ RateStore — Store Rating Application
 
-A full-stack web application where users can browse stores and submit star ratings, store owners can monitor their store's performance, and administrators manage the entire platform.
+<p align="center">
+  <img src="https://img.shields.io/badge/FullStack-Project-blue?style=for-the-badge" />
+  <img src="https://img.shields.io/badge/Frontend-React-61DAFB?style=for-the-badge&logo=react" />
+  <img src="https://img.shields.io/badge/Backend-Node.js-green?style=for-the-badge&logo=node.js" />
+  <img src="https://img.shields.io/badge/Database-PostgreSQL-blue?style=for-the-badge&logo=postgresql" />
+  <img src="https://img.shields.io/badge/Auth-JWT-orange?style=for-the-badge" />
+  <img src="https://img.shields.io/badge/Storage-Supabase-3ECF8E?style=for-the-badge&logo=supabase" />
+</p>
+
+<p align="center">
+  <b>A complete full-stack web application to rate, review, and manage stores efficiently</b>
+</p>
+
+</div>
 
 ---
 
-## Overview
+## 📌 Overview
 
-RateStore is a three-role platform built with a Node.js/Express REST API backend and a React frontend. Regular users browse and rate stores on a 1–5 star scale, store owners view ratings and analytics for their assigned store, and admins manage the full user and store catalogue from a dedicated dashboard.
+**RateStore** is a role-based full-stack platform designed to provide a seamless store rating experience.
+
+### 👥 Roles in the System
+
+- 👤 **Users** → Browse & rate stores
+- 🏪 **Store Owners** → Monitor performance & reviews
+- 🔐 **Admins** → Manage entire platform
+
+Built using a modern architecture with **React (Frontend)** and **Node.js + Express (Backend)** connected to **PostgreSQL (Supabase)**.
 
 ---
 
-## Features
+## 🚀 Features
 
 ### 👤 User (Regular)
 
-- Sign up and log in with email/password
-- Browse all stores with search, sort (name / avg rating), and pagination
-- Submit a star rating (1–5) for any store
-- Update a previously submitted rating
-- View all personal ratings with store averages
-- Change account password
+- Secure Signup & Login (JWT Authentication)
+- Browse stores with:
+  - 🔍 Search
+  - 🔃 Sorting (Name / Rating / Date)
+  - 📄 Pagination
+- Submit rating (1–5 stars)
+- Update rating
+- View personal rating history
+- See average ratings
+- Change password
+
+---
 
 ### 🏪 Store Owner
 
-- View their assigned store's overview (name, address, image)
-- See overall average rating and total review count
-- Interactive rating breakdown bar chart (5★ → 1★ distribution)
-- Browse individual customer reviews with reviewer name, email, and date
+- Store dashboard overview
+- Average rating & total reviews
+- Rating distribution (5★ → 1★)
+- Customer reviews with details
+
+---
 
 ### 🔐 Admin
 
-- Separate login portal (`/adminlogin`) — admins cannot log in via the public login page
-- Dashboard statistics: total users, stores, and ratings
-- User management: list, filter, sort, paginate, view detail, and create users of any role
-- Store management: list, filter, sort, paginate, and create stores
-- Upload, replace, and delete store images (stored in Supabase Storage)
-- Assign stores to store owner accounts
+- Separate login (`/adminlogin`)
+- Dashboard stats:
+  - Total users
+  - Total stores
+  - Total ratings
+- User management (CRUD + filtering)
+- Store management
+- Assign stores to owners
+- Image upload/delete (Supabase Storage)
 
 ---
 
@@ -224,18 +258,16 @@ GET /api/health  →  { "status": "ok", "timestamp": "..." }
 
 ---
 
-## Role-Based Access Control
+## 🔐 Role-Based Access
 
-```
-Route               USER    STORE_OWNER    ADMIN
-─────────────────────────────────────────────────────
-/login               ✓          ✓            ✗ (use /adminlogin)
-/adminlogin          ✗          ✗            ✓
-/signup              ✓          ✗            ✗
-/stores              ✓          ✗            ✓
-/owner               ✗          ✓            ✗
-/admin               ✗          ✗            ✓
-```
+| Route       | USER | STORE_OWNER | ADMIN |
+| ----------- | ---- | ----------- | ----- |
+| /login      | ✅   | ✅          | ❌    |
+| /adminlogin | ❌   | ❌          | ✅    |
+| /signup     | ✅   | ❌          | ❌    |
+| /stores     | ✅   | ❌          | ✅    |
+
+---
 
 Store owners are never created via public signup — they are created exclusively by an Admin through the admin dashboard or API, then a store is assigned to them.
 
@@ -356,3 +388,11 @@ REACT_APP_API_URL=http://localhost:5000/api
 | **Password**   | `password`              |
 
 ---
+
+## 👨‍💻 Author
+
+**Ambar Ubale**
+
+- 💼 Full Stack Developer
+- 🌐 Portfolio: https://ambarportfolio.vercel.app/
+- 🔗 LinkedIn: https://www.linkedin.com/in/ambar-ubale-137214230
