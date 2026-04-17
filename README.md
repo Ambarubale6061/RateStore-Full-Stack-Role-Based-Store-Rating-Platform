@@ -3,16 +3,16 @@
 # ⭐ RateStore — Store Rating Application
 
 <p align="center">
+  <b>A complete full-stack web application to rate, review, and manage stores efficiently</b>
+</p>
+
+<p align="center">
   <img src="https://img.shields.io/badge/FullStack-Project-blue?style=for-the-badge" />
   <img src="https://img.shields.io/badge/Frontend-React-61DAFB?style=for-the-badge&logo=react" />
   <img src="https://img.shields.io/badge/Backend-Node.js-green?style=for-the-badge&logo=node.js" />
   <img src="https://img.shields.io/badge/Database-PostgreSQL-blue?style=for-the-badge&logo=postgresql" />
   <img src="https://img.shields.io/badge/Auth-JWT-orange?style=for-the-badge" />
   <img src="https://img.shields.io/badge/Storage-Supabase-3ECF8E?style=for-the-badge&logo=supabase" />
-</p>
-
-<p align="center">
-  <b>A complete full-stack web application to rate, review, and manage stores efficiently</b>
 </p>
 
 </div>
@@ -147,44 +147,53 @@ store-rating-app/
     └── tailwind.config.js
 ```
 
----
-
 ## Database Schema
 
 Three tables backed by PostgreSQL (hosted on Supabase):
 
-```
-users
-  id          UUID (PK)
-  name        VARCHAR(60)       — 20–60 characters
-  email       VARCHAR(255)      — unique
-  password    TEXT              — bcrypt hash
-  address     VARCHAR(400)
-  role        ENUM              — 'ADMIN' | 'USER' | 'STORE_OWNER'
-  created_at  TIMESTAMPTZ
-  updated_at  TIMESTAMPTZ
+### `users`
 
-stores
-  id          UUID (PK)
-  name        VARCHAR(255)
-  email       VARCHAR(255)
-  address     VARCHAR(400)
-  image_url   TEXT              — Supabase Storage public URL
-  owner_id    UUID (FK → users) — ON DELETE SET NULL
-  created_at  TIMESTAMPTZ
-  updated_at  TIMESTAMPTZ
+| Column       | Type           | Constraints / Description          |
+| ------------ | -------------- | ---------------------------------- |
+| `id`         | `UUID`         | Primary Key                        |
+| `name`       | `VARCHAR(60)`  | 20–60 characters                   |
+| `email`      | `VARCHAR(255)` | Unique                             |
+| `password`   | `TEXT`         | bcrypt hash                        |
+| `address`    | `VARCHAR(400)` |                                    |
+| `role`       | `ENUM`         | 'ADMIN' \| 'USER' \| 'STORE_OWNER' |
+| `created_at` | `TIMESTAMPTZ`  |                                    |
+| `updated_at` | `TIMESTAMPTZ`  |                                    |
 
-ratings
-  id          UUID (PK)
-  user_id     UUID (FK → users)  — ON DELETE CASCADE
-  store_id    UUID (FK → stores) — ON DELETE CASCADE
-  rating      INTEGER            — CHECK 1–5
-  created_at  TIMESTAMPTZ
-  updated_at  TIMESTAMPTZ
-  UNIQUE (user_id, store_id)     — one rating per user per store
-```
+---
 
-All three tables have auto-updating `updated_at` triggers.
+### `stores`
+
+| Column       | Type           | Constraints / Description       |
+| ------------ | -------------- | ------------------------------- |
+| `id`         | `UUID`         | Primary Key                     |
+| `name`       | `VARCHAR(255)` |                                 |
+| `email`      | `VARCHAR(255)` |                                 |
+| `address`    | `VARCHAR(400)` |                                 |
+| `image_url`  | `TEXT`         | Supabase Storage public URL     |
+| `owner_id`   | `UUID`         | FK → users (ON DELETE SET NULL) |
+| `created_at` | `TIMESTAMPTZ`  |                                 |
+| `updated_at` | `TIMESTAMPTZ`  |                                 |
+
+---
+
+### `ratings`
+
+| Column       | Type          | Constraints / Description       |
+| ------------ | ------------- | ------------------------------- |
+| `id`         | `UUID`        | Primary Key                     |
+| `user_id`    | `UUID`        | FK → users (ON DELETE CASCADE)  |
+| `store_id`   | `UUID`        | FK → stores (ON DELETE CASCADE) |
+| `rating`     | `INTEGER`     | CHECK 1–5                       |
+| `created_at` | `TIMESTAMPTZ` |                                 |
+| `updated_at` | `TIMESTAMPTZ` |                                 |
+
+**Constraint:**  
+`UNIQUE (user_id, store_id)` — one rating per user per store
 
 ---
 
